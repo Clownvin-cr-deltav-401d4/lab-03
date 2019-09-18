@@ -33,9 +33,9 @@ describe('edit-file', () => {
   let person = JSON.parse(expectedContent);
   let originalPerson = JSON.parse(expectedContent);
 
-  person.firstName = "Joe";
-  person.hair.type = "straight";
-  person.favoriteFoods[2] = "chili";
+  person.firstName = 'Joe';
+  person.hair.type = 'straight';
+  person.favoriteFoods[2] = 'chili';
   person.married = true;
   person.kids = 4000;
 
