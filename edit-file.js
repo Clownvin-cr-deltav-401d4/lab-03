@@ -1,3 +1,4 @@
+'use-strict';
 const fs = require('fs');
 
 module.exports = exports = {
@@ -5,28 +6,43 @@ module.exports = exports = {
 
   filename: null,
 
-  open: (callback) => {
+  open: () => {
     //console.log("ARGS", process.argv);
     this.filename = `${__dirname}${process.argv[process.argv.length - 1]}`;//
-    callback(null, true);
   },
 
   //editFile.readFile();
 
-  read: (callback) => {
-    fs.readFile(this.filename, 'utf-8', callback);
+  read: () => {
+    return new Promise((resolve, reject) => {
+      fs.readFile(this.filename, 'utf-8', (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
   },
 
   //editFile.getCurrentFilename()
 
-  getFilename: (callback) => {
-    callback(null, this.filename);
+  getFilename: () => {
+    return this.filename;
   },
 
   //editFile.save(JSON.stringify(fileObj));
 
-  save: (contents, callback) => {
-    fs.writeFile(this.filename, contents, callback);
+  save: (contents) => {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(this.filename, contents, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(true);
+        }
+      });
+    });
   },
   
 };
