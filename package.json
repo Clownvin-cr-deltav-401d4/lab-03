@@ -8,8 +8,8 @@
   },
   "scripts": {
     "lint": "eslint **/.js",
-    "test": "jest --coverage --verbose",
-    "test-watch": "jest --watchAll --coverage --verbose"
+    "test": "jest --coverage --verbose /data/person.json",
+    "test-watch": "jest --watchAll --coverage --verbose /data/person.json"
   },
   "author": "",
   "license": "ISC",
