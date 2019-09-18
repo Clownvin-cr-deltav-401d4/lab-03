@@ -1,6 +1,18 @@
 'use-strict';
 const fs = require('fs');
 
+function promisify(func, ...args) {
+  return new Promise((resolve, reject) => {
+    func(...args, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    })
+  });
+}
+
 module.exports = exports = {
   //editFile.open();
 
@@ -13,16 +25,8 @@ module.exports = exports = {
 
   //editFile.readFile();
 
-  read: () => {
-    return new Promise((resolve, reject) => {
-      fs.readFile(this.filename, 'utf-8', (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data);
-        }
-      });
-    });
+  read: async () => {
+    return await promisify(fs.readFile, this.filename, 'utf-8');
   },
 
   //editFile.getCurrentFilename()
@@ -33,16 +37,8 @@ module.exports = exports = {
 
   //editFile.save(JSON.stringify(fileObj));
 
-  save: (contents) => {
-    return new Promise((resolve, reject) => {
-      fs.writeFile(this.filename, contents, (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(true);
-        }
-      });
-    });
+  save: async(contents) => {
+    return await promisify(fs.writeFile, this.filename, contents);
   },
-  
+
 };
