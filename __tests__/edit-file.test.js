@@ -31,7 +31,6 @@ describe('edit-file', () => {
     expect(contents).toEqual(expectedContent);
   });
   let person = JSON.parse(expectedContent);
-  let originalPerson = JSON.parse(expectedContent);
 
   person.firstName = 'Joe';
   person.hair.type = 'straight';
@@ -42,8 +41,8 @@ describe('edit-file', () => {
   it('should save new content to the file', async() => {
     await editFile.save(JSON.stringify(person));
     const contents = await editFile.read();
+    await editFile.save(expectedContent); // Re-save for future tests;
     console.log(contents);
     expect(contents).toEqual('{"firstName":"Joe","lastName":"Scissorhands","hair":{"type":"straight","color":"brown"},"favoriteFoods":["pizza","cupcakes","chili"],"married":true,"kids":4000}');
-    await editFile.save(JSON.stringify(originalPerson)); // Re-save for future tests;
   });
 });
